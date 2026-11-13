@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Portfolio by Qiqi Liu, featuring environmental analysis, spatial data science, Airbnb market analysis and urban regeneration." name="description"/>
+<title>Qiqi Liu | Spatial Data Analysis Portfolio</title>
+<style>
+  :root {
+    --ink: #172b28;
+    --muted: #5e706a;
+    --paper: #f6f5ef;
+    --surface: #fffefa;
+    --green: #28594d;
+    --green-2: #487866;
+    --mint: #dfe9df;
+    --lime: #d4df9e;
+    --sand: #e9e2d2;
+    --line: #d9ded5;
+    --orange: #c8754e;
+    --shadow: 0 18px 55px rgba(23,43,40,.08);
+    --radius: 22px;
+    --max: 1160px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.58; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+  .topbar { position: sticky; top: 0; z-index: 20; background: rgba(246,245,239,.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(217,222,213,.85); }
+  .topbar-inner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { font-size: 13px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; }
+  .nav { display: flex; gap: 24px; align-items: center; color: var(--muted); font-size: 12px; font-weight: 700; }
+  .nav a:hover { color: var(--green); }
+  .nav .contact-link { color: var(--surface); background: var(--green); padding: 9px 15px; border-radius: 999px; }
+  .hero { padding: 72px 0 56px; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 50px; }
+  .eyebrow { color: var(--green-2); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  h1 { font-size: clamp(46px, 6.4vw, 82px); line-height: .98; letter-spacing: -.065em; margin: 18px 0 22px; font-weight: 760; }
+  h1 span { color: var(--green-2); }
+  .hero-copy { max-width: 650px; color: #455a53; font-size: 17px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+  .pill { display: inline-flex; align-items: center; padding: 7px 12px; border-radius: 999px; background: #e8ede4; color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .015em; }
+  .hero-art { min-height: 365px; position: relative; border-radius: 30px; background: #dfe8dc; overflow: hidden; box-shadow: var(--shadow); }
+  .hero-art:before { content:""; position:absolute; inset:0; opacity:.48; background-image: repeating-radial-gradient(ellipse at 75% 38%, transparent 0 24px, rgba(40,89,77,.3) 25px 26px, transparent 27px 44px); transform: rotate(-13deg) scale(1.25); }
+  .hero-art:after { content:""; position:absolute; width:270px; height:270px; border-radius:50%; border:1px solid rgba(40,89,77,.38); left:15%; top:18%; box-shadow: 0 0 0 24px rgba(255,255,255,.12), 0 0 0 54px rgba(255,255,255,.12), 0 0 0 84px rgba(255,255,255,.12); }
+  .art-label { position:absolute; z-index:2; background:rgba(255,254,250,.9); border:1px solid rgba(40,89,77,.12); border-radius:14px; padding:13px 16px; box-shadow:0 8px 25px rgba(23,43,40,.09); }
+  .art-label b { display:block; font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--green); }
+  .art-label span { color:var(--muted); font-size:12px; }
+  .art-a { left:8%; top:12%; } .art-b { right:7%; top:45%; } .art-c { left:18%; bottom:11%; }
+  .hero-foot { border-top:1px solid var(--line); margin-top:54px; padding-top:19px; display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:11px; letter-spacing:.04em; }
+  section { scroll-margin-top: 88px; }
+  .intro { padding: 62px 0 66px; background: var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .section-head { display:flex; justify-content:space-between; align-items:end; gap:26px; margin-bottom:28px; }
+  .section-kicker { color:var(--green-2); text-transform:uppercase; letter-spacing:.16em; font-size:10px; font-weight:850; }
+  h2 { font-size: clamp(29px, 3.2vw, 42px); line-height:1.08; letter-spacing:-.045em; margin:9px 0 0; }
+  .section-sub { max-width:490px; color:var(--muted); font-size:13px; }
+  .intro-grid { display:grid; grid-template-columns: 1.05fr .95fr; gap:48px; }
+  .intro-copy { font-size:15px; color:#455a53; max-width:640px; }
+  .skills { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .skill { background:#f2f4ed; padding:16px 17px; border-radius:14px; border:1px solid #e5e9e0; }
+  .skill strong { display:block; font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--green); margin-bottom:5px; }
+  .skill span { color:var(--muted); font-size:12px; }
+  .project { padding: 76px 0; border-bottom:1px solid var(--line); }
+  .project:nth-of-type(even) { background: rgba(255,254,250,.55); }
+  .project-top { display:grid; grid-template-columns: .34fr 1fr; gap:34px; align-items:start; margin-bottom:32px; }
+  .project-index { color:var(--green-2); font-size:12px; font-weight:850; letter-spacing:.14em; padding-top:9px; }
+  .project-title { max-width:840px; }
+  .project-title h2 { font-size: clamp(30px, 3.5vw, 46px); }
+  .project-subtitle { color:var(--muted); margin-top:10px; font-size:13px; }
+  .project-grid { display:grid; grid-template-columns: 1fr .88fr; gap:34px; align-items:stretch; }
+  .story { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:27px 29px; box-shadow:var(--shadow); }
+  .story h3, .visual h3 { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--green); margin:0 0 12px; }
+  .story p { margin:0 0 17px; color:#465a53; font-size:14px; }
+  .story p:last-child { margin-bottom:0; }
+  .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:20px; }
+  .detail h4 { margin:0 0 6px; color:var(--green); font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+  .detail p { margin:0; font-size:12px; color:var(--muted); }
+  .visual { background:#e7ede5; border-radius:var(--radius); padding:25px; position:relative; overflow:hidden; min-height:300px; display:flex; flex-direction:column; justify-content:space-between; }
+  .visual.dark { background:#203d37; color:#f6f5ef; }
+  .visual.dark h3 { color:#c8d9c8; }
+  .visual p { color:var(--muted); font-size:11px; margin:0; }
+  .visual.dark p { color:#c5d4cb; }
+  .caption { font-size:10px!important; color:#6a7b72!important; margin-top:12px!important; letter-spacing:.02em; }
+  .visual.dark .caption { color:#bbcbbf!important; }
+  .metric-row { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:9px 0 15px; }
+  .metric { background:rgba(255,254,250,.78); border:1px solid rgba(40,89,77,.12); padding:12px 10px; border-radius:12px; }
+  .metric b { display:block; font-size:22px; line-height:1.1; color:var(--green); letter-spacing:-.05em; }
+  .metric span { display:block; font-size:9px; color:var(--muted); line-height:1.35; margin-top:5px; }
+  .bars { display:flex; align-items:end; height:98px; gap:9px; border-bottom:1px solid rgba(40,89,77,.25); padding:0 8px; }
+  .bar { flex:1; border-radius:6px 6px 0 0; background:#7da08b; position:relative; }
+  .bar:nth-child(2n) { background:#b4c49d; }
+  .bar:after { content:""; position:absolute; top:100%; left:0; right:0; height:6px; }
+  .bar-labels { display:flex; justify-content:space-between; color:#62756c; font-size:9px; padding:8px 8px 0; }
+  .workflow { display:grid; grid-template-columns:1fr 22px 1fr 22px 1fr; gap:5px; align-items:center; margin:18px 0; }
+  .step { border:1px solid rgba(40,89,77,.2); background:rgba(255,254,250,.66); border-radius:13px; padding:16px 11px; min-height:96px; }
+  .step strong { display:block; color:var(--green); font-size:11px; margin-bottom:5px; }
+  .step span { display:block; color:var(--muted); font-size:10px; line-height:1.4; }
+  .arrow { color:var(--green-2); font-weight:800; text-align:center; }
+  .not-real { font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:#6b8075; font-weight:800; margin-bottom:13px; }
+  .visual.dark .not-real { color:#b9ccbf; }
+  .code-window { background:#142f2a; border-radius:14px; padding:15px 16px; color:#dce9db; font:11px/1.75 ui-monospace, SFMono-Regular, Menlo, monospace; margin:12px 0; overflow:hidden; }
+  .code-window .muted-code { color:#86a99a; }
+  .code-window .accent-code { color:#d7df9d; }
+  .supply-graphic { width:100%; height:auto; display:block; margin:4px auto 0; }
+  .supply-graphic text { font-family:inherit; fill:#51665d; font-size:10px; }
+  .supply-graphic .axis { stroke:#84968c; stroke-width:1.3; }
+  .supply-graphic .gridline { stroke:#c6d1c6; stroke-width:1; stroke-dasharray:3 5; }
+  .supply-graphic .curve { fill:none; stroke:#3c7562; stroke-width:3; stroke-linecap:round; }
+  .supply-graphic .curve2 { fill:none; stroke:#bf794e; stroke-width:3; stroke-linecap:round; }
+  .layer-stack { display:grid; gap:9px; margin:14px 0; }
+  .layer { display:flex; align-items:center; gap:12px; background:rgba(255,254,250,.72); border:1px solid rgba(40,89,77,.14); border-radius:12px; padding:12px 14px; }
+  .layer-num { width:25px; height:25px; display:grid; place-items:center; border-radius:8px; background:#d5e1d5; color:var(--green); font-size:10px; font-weight:850; }
+  .layer strong { display:block; font-size:11px; color:var(--green); }
+  .layer span { display:block; font-size:10px; color:var(--muted); }
+  .takeaway { margin-top:26px; padding:20px 24px; border-left:3px solid var(--orange); background:#f0eee5; border-radius:0 14px 14px 0; color:#455a53; font-size:13px; }
+  .takeaway strong { color:var(--green); }
+  .end { padding:70px 0 48px; background:#203d37; color:#f6f5ef; }
+  .end-grid { display:grid; grid-template-columns:1fr .8fr; gap:50px; align-items:end; }
+  .end h2 { font-size:clamp(34px,4.2vw,54px); max-width:600px; }
+  .end p { color:#c7d5cc; font-size:14px; max-width:540px; }
+  .contact-card { justify-self:end; min-width:260px; padding:21px 23px; border:1px solid rgba(255,255,255,.2); border-radius:17px; }
+  .contact-card span { display:block; font-size:10px; text-transform:uppercase; letter-spacing:.13em; color:#b6cabb; font-weight:800; margin-bottom:8px; }
+  .contact-card a { display:block; color:#fffefa; font-size:14px; margin:4px 0; }
+  footer { padding:17px 0; background:#172f2a; color:#aabeb1; font-size:10px; }
+  footer .wrap { display:flex; justify-content:space-between; gap:20px; }
+  @media (max-width: 800px) {
+    .hero-grid, .intro-grid, .project-grid, .end-grid { grid-template-columns:1fr; }
+    .hero-art { min-height:280px; }
+    .project-top { grid-template-columns:1fr; gap:8px; }
+    .section-head { align-items:start; flex-direction:column; }
+    .contact-card { justify-self:start; }
+  }
+  @media (max-width: 560px) {
+    .wrap { width:calc(100% - 30px); }
+    .topbar-inner { min-height:58px; }
+    .nav { gap:12px; font-size:10px; }
+    .nav a:nth-child(2), .nav a:nth-child(3) { display:none; }
+    .hero { padding:52px 0 42px; }
+    .hero-foot { flex-direction:column; gap:6px; }
+    .skills, .detail-grid { grid-template-columns:1fr; }
+    .project { padding:55px 0; }
+    .story { padding:21px; }
+    .visual { padding:20px; min-height:270px; }
+    .workflow { grid-template-columns:1fr; }
+    .arrow { transform:rotate(90deg); }
+    .metric-row { grid-template-columns:1fr 1fr 1fr; }
+    .metric b { font-size:18px; }
+  }
+  @media print {
+    @page { size:A4; margin:14mm; }
+    body { background:#fff; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .topbar { position:static; }
+    .nav { display:none; }
+    .wrap { width:100%; }
+    .hero { padding:25px 0; }
+    .hero-grid { grid-template-columns:1.1fr .9fr; gap:20px; }
+    .hero-art { min-height:220px; }
+    .project, .intro, .end { break-inside:avoid; }
+    .project { padding:32px 0; }
+    .project-grid { grid-template-columns:1fr .9fr; gap:16px; }
+    .story { box-shadow:none; }
+    .visual { min-height:240px; }
+    a { text-decoration:none; }
+  }
+
+  .live-map-wrap { margin-top:28px; background:#fffefa; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+  .live-map-head { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:20px 24px; flex-wrap:wrap; }
+  .live-map-head h3 { margin:0; color:var(--green); font-size:12px; text-transform:uppercase; letter-spacing:.12em; }
+  .live-map-head p { margin:5px 0 0; color:var(--muted); font-size:12px; }
+  .live-map-frame { display:block; width:100%; height:720px; border:0; background:#edf1eb; }
+  .live-map-actions { display:flex; gap:10px; flex-wrap:wrap; }
+  .action-link, .gallery-controls button { border:1px solid #cbd7cc; background:#f4f6ef; color:var(--green); border-radius:999px; padding:9px 14px; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+  .action-link:hover, .gallery-controls button:hover { background:#e3ebdf; }
+  .gallery { background:#fffefa; border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
+  .gallery-stage { min-height:360px; display:flex; align-items:center; justify-content:center; background:#f2f4ef; border-radius:14px; overflow:hidden; }
+  .gallery-stage img { display:block; width:100%; max-height:560px; object-fit:contain; }
+  .gallery-caption { display:flex; justify-content:space-between; align-items:center; gap:14px; margin:13px 2px 16px; color:var(--muted); font-size:12px; }
+  .gallery-controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .gallery-controls button[aria-pressed="true"] { background:var(--green); color:#fffefa; border-color:var(--green); }
+  .gallery-controls .prevnext { margin-left:auto; }
+  .gallery-note { color:var(--muted); font-size:10px; margin:13px 2px 0; }
+  @media(max-width:800px) { .live-map-frame{height:620px;} .gallery-stage{min-height:230px;} }
+  @media(max-width:560px) { .live-map-frame{height:540px;} .gallery{padding:14px;} .gallery-controls .prevnext{margin-left:0;} .gallery-caption{align-items:flex-start;flex-direction:column;} }
+
+
+  .project-grid-single { grid-template-columns: minmax(0, 1fr); }
+  .project-grid-single .story { max-width: 100%; }
+  .evidence-explorer { margin-top:28px; background:#fffefa; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+  .evidence-heading { padding:25px 28px 20px; display:flex; justify-content:space-between; align-items:flex-end; gap:22px; flex-wrap:wrap; }
+  .evidence-heading h3 { margin:0 0 7px; color:var(--green); font-size:16px; letter-spacing:.02em; text-transform:none; }
+  .evidence-heading p { margin:0; max-width:620px; color:var(--muted); font-size:12px; }
+  .evidence-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0 28px 22px; }
+  .evidence-metric { background:#f2f5ef; border:1px solid #e1e8df; border-radius:14px; padding:15px 17px; }
+  .evidence-metric strong { display:block; color:var(--green); font-size:28px; line-height:1.1; letter-spacing:-.04em; }
+  .evidence-metric span { display:block; margin-top:6px; color:var(--muted); font-size:10px; line-height:1.4; }
+  .evidence-chart-area { display:grid; grid-template-columns:1.25fr .75fr; gap:16px; padding:0 28px 24px; }
+  .evidence-chart-card { min-width:0; background:#f8f9f5; border:1px solid #e3e9e1; border-radius:16px; padding:17px; }
+  .evidence-chart-title { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .evidence-chart-title h4, .evidence-map-heading h4 { margin:0; color:var(--green); font-size:12px; }
+  .evidence-chart-title p, .evidence-map-heading p { margin:4px 0 0; color:var(--muted); font-size:10px; }
+  .trend-legend { display:flex; gap:11px; flex-wrap:wrap; color:var(--muted); font-size:10px; }
+  .trend-legend span { white-space:nowrap; }
+  .trend-legend i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+  .trend-svg { display:block; width:100%; height:auto; }
+  .evidence-footnote { margin:8px 0 0; color:#728078; font-size:9px; line-height:1.5; }
+  .monitor-illustration { margin-top:13px; }
+  .monitor-illustration svg { display:block; width:100%; height:auto; }
+  .evidence-photo { display:block; width:100%; height:205px; object-fit:cover; object-position:center 42%; border-radius:12px; }
+  .evidence-eyebrow { font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:#6b8075; font-weight:800; margin-bottom:13px; }
+  .evidence-map-heading { border-top:1px solid var(--line); padding:20px 28px 14px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .map-live-tag { font-size:9px; text-transform:uppercase; letter-spacing:.1em; font-weight:800; color:var(--green); background:#e8efe7; padding:7px 10px; border-radius:999px; white-space:nowrap; }
+  .evidence-map-frame-wrap { margin:0 28px; border:1px solid #dfe6dd; border-radius:14px; overflow:hidden; background:#edf1eb; }
+  .evidence-map-frame { display:block; width:100%; height:690px; border:0; background:#edf1eb; }
+  .evidence-source-note { padding:14px 28px 20px; color:#718078; font-size:9px; line-height:1.55; }
+  @media(max-width:800px) { .evidence-chart-area {grid-template-columns:1fr;} .evidence-heading {align-items:flex-start;} .evidence-map-frame {height:640px;} }
+  @media(max-width:560px) { .evidence-heading {padding:20px;} .evidence-metrics {padding:0 20px 18px; gap:7px;} .evidence-metric {padding:12px 9px;} .evidence-metric strong {font-size:21px;} .evidence-metric span {font-size:9px;} .evidence-chart-area {padding:0 20px 18px;} .evidence-map-heading {padding:17px 20px 12px; align-items:flex-start; flex-direction:column;} .evidence-map-frame-wrap {margin:0 20px;} .evidence-map-frame {height:570px;} .evidence-source-note {padding:12px 20px 18px;} }
+
+
+/* --- Unified project overviews and evidence carousels, November 2026 --- */
+.project-grid{display:grid;grid-template-columns:minmax(0,0.94fr) minmax(0,1.06fr);align-items:stretch;gap:22px;}
+.project-grid>.story,.project-grid>.evidence-carousel{min-width:0;height:100%;}
+.story{display:flex;flex-direction:column;}
+.evidence-carousel{display:flex;flex-direction:column;border:1px solid #d9ded5;border-radius:22px;background:#fffefa;padding:22px;box-shadow:0 18px 55px rgba(23,43,40,.08);min-height:515px;}
+.evidence-carousel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px;}
+.evidence-carousel-top h3{font-size:12px;letter-spacing:.09em;line-height:1.35;text-transform:uppercase;color:#28594d;margin:0;max-width:56%;}
+.evidence-arrows{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.evidence-count{font-variant-numeric:tabular-nums;color:#718178;font-size:11px;letter-spacing:.04em;min-width:52px;text-align:right;}
+.evidence-arrow{height:37px;width:37px;display:grid;place-items:center;line-height:1;font-size:24px;border-radius:50%;border:1px solid #c7d4ca;background:#f4f7f0;color:#28594d;cursor:pointer;transition:background .2s ease,transform .2s ease;}
+.evidence-arrow:hover{background:#dae9dc;transform:translateY(-1px)}
+.evidence-arrow:focus-visible,.evidence-dot:focus-visible{outline:3px solid #9abb9c;outline-offset:3px}
+.evidence-slide-heading{min-height:94px;display:flex;flex-direction:column;justify-content:center;padding-bottom:12px;}
+.slide-label{font-size:9px;letter-spacing:.14em;font-weight:850;color:#72877a;margin-bottom:5px;}
+.evidence-slide-title{font-size:16px;line-height:1.24;font-weight:760;letter-spacing:-.02em;margin:0 0 5px;color:#203d37;}
+.evidence-slide-description{font-size:11px!important;line-height:1.5;color:#64746c!important;margin:0;}
+.evidence-stage{position:relative;flex:1;min-height:350px;height:100%;border:1px solid #e0e9df;border-radius:14px;overflow:hidden;background:#f2f6f0;}
+.evidence-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.evidence-slide[hidden]{display:none!important;}
+.evidence-iframe{position:absolute;inset:0;border:0;width:100%;height:100%;background:#f4f7f0;display:block;}
+.live-fallback{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;background:#f2f6f0;pointer-events:none;}
+.live-fallback-symbol{border:2px solid #c7daca;border-top-color:#28594d;border-radius:50%;width:32px;height:32px;line-height:25px;font-size:13px;color:transparent;margin-bottom:15px;animation:load-spin 1.5s linear infinite;}
+.live-fallback strong{font-size:14px;color:#28594d;margin-bottom:7px;}.live-fallback p{font-size:11px;color:#718276;max-width:300px;margin:0 0 14px;}.live-fallback a{pointer-events:auto;font-size:11px;text-decoration:underline;text-underline-offset:3px;color:#28594d;font-weight:800;}@keyframes load-spin{to{transform:rotate(360deg)}}
+.evidence-image-wrap{height:100%;width:100%;display:grid;place-items:center;padding:12px;background:#f8faf6;}
+.evidence-image{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;display:block;}
+.evidence-footer{min-height:55px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;}
+.evidence-dots{display:flex;gap:7px;align-items:center;flex-shrink:0;}
+.evidence-dot{width:8px;height:8px;border:0;border-radius:50%;background:#c8d8ca;cursor:pointer;padding:0;transition:all .2s ease;}
+.evidence-dot[aria-current="true"]{width:21px;border-radius:6px;background:#28594d;}
+.evidence-footnote{font-size:9px;color:#687a6e;line-height:1.42;text-align:right;max-width:72%;}
+.evidence-footnote a{text-decoration:underline;text-underline-offset:2px;color:#28594d;font-weight:800;}
+.schematic-slide{width:100%;padding:25px 22px;background:#e7efe6;}
+.schematic-brow{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4c7a61;font-weight:800;margin-bottom:14px;}
+.workflow-in-carousel{margin:10px 0 24px;}
+.workflow-in-carousel .step{min-height:100px;padding:13px 10px;}
+.workflow-in-carousel .step strong{font-size:10px;}
+.schematic-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.schematic-stats>div{background:#fffefa;border-radius:12px;padding:13px 10px;border:1px solid #d7e4d5;}
+.schematic-stats b{font-size:17px;letter-spacing:-.04em;color:#28594d;display:block;}
+.schematic-stats span{font-size:9px;color:#65796d;display:block;}
+.schematic-slide .layer-stack{margin:0;}
+.schematic-slide .layer{padding:10px 12px;}
+.evidence-pending{width:min(380px,100%);margin:auto;text-align:center;padding:26px;color:#63776a;}
+.pending-symbol{width:56px;height:56px;display:grid;place-items:center;margin:0 auto 20px;border:1px dashed #91ac99;border-radius:16px;background:#e4eee4;color:#3f765a;font-size:27px;}
+.pending-kicker{text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:850;color:#5b8673;margin-bottom:8px;}
+.evidence-pending strong{display:block;color:#284f43;font-size:17px;margin:0 0 9px;}
+.evidence-pending p{font-size:11px;line-height:1.5;color:#78887e;}
+@media(max-width:930px){.project-grid{grid-template-columns:1fr;}.project-grid>.story,.project-grid>.evidence-carousel{height:auto;}.evidence-stage{min-height:410px;}.evidence-carousel{min-height:590px;}}
+@media(max-width:560px){.evidence-carousel{padding:16px;min-height:525px;}.evidence-carousel-top{align-items:flex-start;}.evidence-carousel-top h3{font-size:11px;max-width:53%;}.evidence-arrow{width:31px;height:31px;font-size:22px;}.evidence-count{font-size:10px;min-width:44px;}.evidence-stage{min-height:320px;}.evidence-slide-heading{min-height:108px;}.evidence-footer{align-items:flex-start;flex-direction:column;}.evidence-footnote{text-align:left;max-width:100%;}.workflow-in-carousel{grid-template-columns:1fr;gap:4px;}.workflow-in-carousel .step{min-height:0;padding:10px 14px;}.workflow-in-carousel .arrow{transform:rotate(90deg);}.schematic-slide{padding:14px;}.schematic-stats>div{padding:8px 6px;}.schematic-stats b{font-size:14px;}}
+@media print{.evidence-stage{height:330px;min-height:330px;}.evidence-carousel{box-shadow:none;min-height:500px;}.evidence-arrows,.evidence-dots{display:none;}}
+</style>
+<meta content="Qiqi Liu — selected portfolio projects with interactive maps, charts and reproducible-analysis findings." name="description"/></head>
+<body>
+<header class="topbar">
+<div class="wrap topbar-inner">
+<a class="brand" href="#top">Qiqi Liu / Spatial Analysis</a>
+<nav aria-label="Main navigation" class="nav">
+<a href="#profile">Profile</a>
+<a href="#approach">Skills</a>
+<a href="#projects">Projects</a>
+<a class="contact-link" href="#contact">Contact</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<section class="hero">
+<div class="wrap">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Selected work · Spatial data · Visualised Analysis</div>
+<h1>Qiqi Liu<br/><span>Spatial Data Analysis </span><br/>Portfolio</h1>
+<p class="hero-copy">I use spatial analysis, data science and visualisation to investigate how places change and to communicate evidence that can support better planning and environmental decisions.</p>
+<div class="hero-meta">
+<span class="pill">MSc Urban Spatial Science · UCL</span>
+<span class="pill">GIS &amp; spatial analysis</span>
+<span class="pill">Python · machine learning</span>
+<span class="pill">Web visualisation</span>
+</div>
+</div>
+<div aria-label="Abstract topographic line artwork" class="hero-art">
+<div class="art-label art-a"><b>01 / Environment</b><span>Air quality analysis</span></div>
+<div class="art-label art-b"><b>02 / Urban change</b><span>High streets &amp; markets</span></div>
+<div class="art-label art-c"><b>03 / Place</b><span>Socio-spatial research</span></div>
+</div>
+</div>
+<div class="hero-foot"><span>APPLICATION PORTFOLIO · GRADUATE</span></div>
+</div>
+</section>
+<section class="intro" id="profile">
+<div class="wrap">
+<div class="section-head">
+<div><div class="section-kicker">01 / Profile</div><h2>From complex data<br/>to useful spatial insight.</h2></div>
+<p class="section-sub">A selection of academic and applied projects demonstrating analytical delivery, data management, GIS, environmental interest and collaborative working.</p>
+</div>
+<div class="intro-grid">
+<div class="intro-copy">
+<p>I hold an MSc in Urban Spatial Science from UCL, supported by postgraduate training in Architecture and Urban Design and an undergraduate degree in Urban Planning. My work combines spatial thinking with practical data analysis: sourcing and preparing multi-source datasets, building reproducible analytical workflows, identifying patterns and presenting findings through maps, dashboards and reports.</p>
+<p>My project experience spans environmental policy analysis, urban economic change, short-term rental market dynamics and urban regeneration. I am interested in applying these skills to multidisciplinary environmental consultancy and continuing to develop my spatial data analysis capabilities.</p>
+</div>
+<div class="skills" id="approach">
+<div class="skill"><strong>GIS &amp; spatial analysis</strong><span>ArcGIS, GeoPandas, spatial data integration, cartographic thinking</span></div>
+<div class="skill"><strong>Programming &amp; data</strong><span>Python, pandas, scikit-learn, R, SQL</span></div>
+<div class="skill"><strong>Web &amp; visualisation</strong><span>JavaScript, HTML, CSS, interactive dashboards, Git</span></div>
+<div class="skill"><strong>Analytical delivery</strong><span>Data cleaning, validation, classification, reproducible workflows, reporting</span></div>
+</div>
+</div>
+</div>
+</section>
+<div id="projects">
+<!-- PROJECT 1 -->
+<section class="project" id="air-quality">
+<div class="wrap">
+<div class="project-top">
+<div class="project-index">PROJECT 01<br/>ENVIRONMENT</div>
+<div class="project-title">
+<div class="section-kicker">UCL · Team project · May–August 2023</div>
+<h2>Air Quality &amp;<br/>Environmental Policy Analysis</h2>
+<div class="project-subtitle">Investigating environmental trends through multi-source data analysis and interactive visualisation · New York City</div>
+</div>
+</div>
+<div class="project-grid">
+<div class="story">
+<h3>Project overview</h3>
+<p>Analysed eight years of air-quality data (2013–2021), sourced from APIs and structured datasets, to examine environmental trends in the context of sustainability policy. The project considered air quality alongside factors such as green space, clean energy and bike-sharing initiatives.</p>
+<h3 style="margin-top:22px">My contribution</h3>
+<p>Cleaned, integrated and validated data from multiple sources, then developed interactive dashboards using JavaScript, HTML and CSS to communicate patterns and project findings. I coordinated analytical tasks with a cross-functional team and used Git to support collaborative development.</p>
+<div class="detail-grid">
+<div class="detail"><h4>Data &amp; methods</h4><p>2013–2021 time series · API and structured data · data integration and validation · trend analysis</p></div>
+<div class="detail"><h4>Tools</h4><p>JavaScript · HTML · CSS · Git · data visualisation</p></div>
+</div>
+</div>
+<div class="evidence-carousel" data-evidence-carousel="air-quality">
+<div class="evidence-carousel-top"><h3>Explore the project</h3><div class="evidence-arrows"><span aria-live="polite" class="evidence-count">01 / 03</span><button aria-label="Previous evidence for project air-quality" class="evidence-arrow" data-dir="-1" type="button">‹</button><button aria-label="Next evidence for project air-quality" class="evidence-arrow" data-dir="1" type="button">›</button></div></div>
+<div class="evidence-slide-heading"><div class="slide-label">LIVE · INTERACTIVE MAP</div><h4 class="evidence-slide-title">Interactive community-district map</h4><p class="evidence-slide-description">Switch pollutants and years (2013–2021) to explore the original Mapbox choropleth in this same panel.</p></div>
+<div class="evidence-stage"><div aria-label="1 of 3" aria-roledescription="slide" class="evidence-slide is-current" data-slide-index="0" role="group"><div class="live-fallback"><div class="live-fallback-symbol">◉</div><strong>Loading Map Visualisation</strong><p> An internet connection is required.</p><a href="https://digivisual-2023-group02.github.io/CASA0003/AirQuality.html" rel="noopener noreferrer" target="_blank">Open original project ↗</a></div><iframe class="evidence-iframe" data-live-doc="map" loading="lazy" referrerpolicy="no-referrer" title="Live map of air pollution by New York community district"></iframe></div><div aria-label="2 of 3" aria-roledescription="slide" class="evidence-slide" data-slide-index="1" hidden="" role="group"><div class="live-fallback"><div class="live-fallback-symbol">◉</div><strong>Loading Chart Visualisation</strong><p>External data or libraries need an internet connection.</p><a href="https://digivisual-2023-group02.github.io/CASA0003/AirQuality.html" rel="noopener noreferrer" target="_blank">View full website ↗</a></div><iframe class="evidence-iframe" data-live-doc="ev-adoption-chart" loading="lazy" referrerpolicy="no-referrer" title="Original BEV and PHEV time-series chart"></iframe></div><div aria-label="3 of 3" aria-roledescription="slide" class="evidence-slide" data-slide-index="2" hidden="" role="group"><div class="live-fallback"><div class="live-fallback-symbol">◉</div><strong>Loading Map Visualisation</strong><p>External data or libraries need an internet connection.</p><a href="https://digivisual-2023-group02.github.io/CASA0003/AirQuality.html" rel="noopener noreferrer" target="_blank">View full website ↗</a></div><iframe class="evidence-iframe" data-live-doc="fuel-stations-map" loading="lazy" referrerpolicy="no-referrer" title="Interactive New York alternative-fuel station map"></iframe></div></div>
+<div class="evidence-footer"><div aria-label="Evidence views" class="evidence-dots" role="group"><button aria-current="true" aria-label="Show evidence 1: Interactive community-district map" class="evidence-dot" data-index="0" type="button"></button><button aria-current="false" aria-label="Show evidence 2: Electric and plug-in hybrid trends" class="evidence-dot" data-index="1" type="button"></button><button aria-current="false" aria-label="Show evidence 3: New York alternative-fuel stations" class="evidence-dot" data-index="2" type="button"></button></div><div class="evidence-footnote"><a href="https://digivisual-2023-group02.github.io/CASA0003/Home.html" rel="noopener noreferrer" target="_blank">Full group website ↗</a> · Live views require internet access. @CASA0003-Digital-Visualisation-Group-02.</div></div>
+</div></div>
+
+</section>
+
+<!-- PROJECT 2 -->
+<section class="project" id="high-streets">
+<div class="wrap">
+<div class="project-top">
+<div class="project-index">PROJECT 02<br/>SPATIAL DATA SCIENCE</div>
+<div class="project-title">
+<div class="section-kicker">UCL · Individual dissertation · April–August 2023</div>
+<h2>Spatial Data Analysis<br/>of London High Streets</h2>
+<div class="project-subtitle">Using retail and socioeconomic datasets to identify patterns and drivers of commercial change</div>
+</div>
+</div>
+<div class="project-grid">
+<div class="story">
+<h3>Project overview</h3>
+<p>Investigated how London's high streets changed over time by combining ten years of socioeconomic data with more than 10,000 retail records. The analysis explored patterns of commercial change and the socioeconomic and accessibility-related factors associated with different high-street trajectories.</p>
+<h3 style="margin-top:22px">Work Summary</h3>
+<p>Led the end-to-end analytical workflow, including data preparation, integration, feature development and machine-learning classification. Used Python and GeoPandas to structure and analyse the datasets, and scikit-learn to develop classification models. Optimised the data-processing workflow, improving efficiency by approximately 20%.</p>
+<div class="detail-grid">
+<div class="detail"><h4>Data &amp; methods</h4><p>10 years of socioeconomic data · 10,000+ retail records · spatial data integration · classification modelling</p></div>
+<div class="detail"><h4>Tools</h4><p>Python · pandas · GeoPandas · scikit-learn</p></div>
+</div>
+</div>
+<div class="evidence-carousel" data-evidence-carousel="high-streets">
+<div class="evidence-carousel-top"><h3>Explore the project</h3><div class="evidence-arrows"><span aria-live="polite" class="evidence-count">01 / 07</span><button aria-label="Previous evidence for project high-streets" class="evidence-arrow" data-dir="-1" type="button">‹</button><button aria-label="Next evidence for project high-streets" class="evidence-arrow" data-dir="1" type="button">›</button></div></div>
+<div class="evidence-slide-heading"><div class="slide-label">ILLUSTRATIVE FRAMEWORK</div><h4 class="evidence-slide-title">Spatial analysis workflow</h4><p class="evidence-slide-description">A schematic of data integration, spatial features and classification modelling.</p></div>
+<div class="evidence-stage">
+  <div aria-label="1 of 7" aria-roledescription="slide" class="evidence-slide is-current" data-slide-index="0" role="group"><div class="schematic-slide"><div class="schematic-brow">Analytical process · schematic, not a measured map</div>
+<div class="workflow workflow-in-carousel"><div class="step"><strong>01 / Integrate</strong><span>Retail records + socioeconomic data</span></div><div class="arrow">→</div><div class="step"><strong>02 / Analyse</strong><span>Prepare spatial features and inspect change</span></div><div class="arrow">→</div><div class="step"><strong>03 / Classify</strong><span>Model high-street trajectories</span></div></div><div class="schematic-stats"><div><b>10k+</b><span>Retail records</span></div><div><b>10 years</b><span>Socioeconomic data</span></div><div><b>~20%</b><span>Workflow improvement</span></div></div></div></div>
+<div aria-label="2 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="1" hidden="" role="group">
+<img alt="London High-Street Boundaries" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Disertation_London_High_Streets.jpg"/>
+</div>
+<div aria-label="3 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="2" hidden="" id="high-streets-evidence-03" role="group">
+<img alt="London Socio-Economic Changes" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Dissertation_changes_in_London.png"/>
+</div>
+<div aria-label="4 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="3" hidden="" id="high-streets-evidence-04" role="group">
+<img alt="Waltham Forest Borough Changes" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Dissertation_changes_in_WF.png"/>
+</div>
+<div aria-label="5 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="4" hidden="" id="high-streets-evidence-05" role="group">
+  <img alt="High Streets and Buffer Areas" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Dissertation_WF_High_Streets.png"/>
+</div>
+<div aria-label="6 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="5" hidden="" id="high-streets-evidence-06" role="group">
+  <img alt="Changes in Retail Duration (2011)" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Disertation_WF_Retail_2011.png"/>
+</div>
+<div aria-label="7 of 7" aria-roledescription="slide" class="evidence-slide" data-slide-index="6" hidden="" id="high-streets-evidence-06" role="group">
+  <img alt="Changes in Retail Duration (2021)" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Disertation_WF_Retail_2021.png"/>
+</div>
+</div>
+
+<div class="evidence-footer"><div aria-label="Evidence views" class="evidence-dots" role="group">
+  <button aria-current="true" aria-label="Show evidence 1: Spatial analysis workflow" class="evidence-dot" data-index="0" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 2: London High-Street Boundaries (2021)" class="evidence-dot" data-index="1" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 3: Retail composition changes" class="evidence-dot" data-index="2" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 4: Socioeconomic indicators" class="evidence-dot" data-index="3" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 5: Transport &amp; accessibility" class="evidence-dot" data-index="4" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 6: Classification model results" class="evidence-dot" data-index="5" type="button"></button>
+  <button aria-current="false" aria-label="Show evidence 7: Classification model results" class="evidence-dot" data-index="6" type="button"></button>
+</div>
+<div class="evidence-footnote"><a href="https://github.com/liu-qiqi/High-Street-Gentrification/blob/main/HighStreetGentrification-Code.ipynb" rel="noopener noreferrer" target="_blank">Analysis Work ↗</a></div>
+</div></div>
+</div></div>
+
+</section>
+
+<!-- PROJECT 3 -->
+<section class="project" id="airbnb">
+<div class="wrap">
+<div class="project-top">
+<div class="project-index">PROJECT 03<br/>MARKET &amp; URBAN CHANGE</div>
+<div class="project-title">
+<div class="section-kicker">UCL · Team project · September 2022–January 2023</div>
+<h2>Impact of COVID-19 on<br/>Airbnb Supply &amp; Demand in London</h2>
+<div class="project-subtitle">Building a reproducible Python analysis to investigate changes in the short-term rental market</div>
+</div>
+</div>
+<div class="project-grid">
+<div class="story">
+<h3>Project overview</h3>
+<p>Worked in a team to conduct exploratory data analysis of the London Airbnb market at borough level, comparing 2019 (pre-pandemic) with 2022 (post-pandemic). The report examined supply using listing counts and availability, and used review recency as an indicator of demand.</p>
+<p>The report found that listing counts rose in 29 of 33 boroughs, while the number of listings classified as in-demand fell in 29 boroughs. The spatial analysis also indicated a shift in supply and demand activity towards outer London. These are descriptive findings from the project’s exploratory analysis, not results from a formal predictive model.</p>
+<h3 style="margin-top:22px">My contribution</h3>
+<p>Helped define the briefing structure and analytical framework, proposed revisiting the research question and reviewing relevant literature when the initial implications were unclear, and compared analytical results to identify evidence supporting the team's key findings.</p>
+<p>Co-developed the coding for the analysis in Python and Jupyter Notebook, covering data loading, preprocessing and analysis. I structured and annotated the workflow, recorded technical challenges and iteratively tested solutions in discussion with the team to produce reproducible analytical steps.</p>
+<div class="detail-grid">
+<div class="detail"><h4>Focus</h4><p>London Airbnb market · COVID-19 · supply and demand changes</p></div>
+<div class="detail"><h4>Tools &amp; methods</h4><p>Python · Jupyter Notebook · data ingestion · preprocessing · reproducible analysis · literature review</p></div>
+</div>
+</div>
+<div class="evidence-carousel" data-evidence-carousel="airbnb">
+<div class="evidence-carousel-top"><h3>Explore the project</h3><div class="evidence-arrows"><span aria-live="polite" class="evidence-count">01 / 06</span><button aria-label="Previous evidence for project airbnb" class="evidence-arrow" data-dir="-1" type="button">‹</button><button aria-label="Next evidence for project airbnb" class="evidence-arrow" data-dir="1" type="button">›</button></div></div>
+<div class="evidence-slide-heading">
+  <div class="slide-label">VISUALISATION MAPS</div>
+  <h4 class="evidence-slide-title">Listings by borough, 2019 vs 2022</h4><p class="evidence-slide-description"> An Overview of Supply Listing Changes.</p>
+</div>
+<div class="evidence-stage">
+  <div aria-label="1 of 6" aria-roledescription="slide" class="evidence-slide is-current" data-slide-index="0" id="airbnb-evidence-01" role="group">
+      <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Supply1.jpg"/>
+    </div>
+  <div aria-label="2 of 6" aria-roledescription="slide" class="evidence-slide" data-slide-index="1" hidden="" id="airbnb-evidence-02" role="group">
+      <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Supply2.jpg"/>
+  </div>
+  <div aria-label="3 of 6" aria-roledescription="slide" class="evidence-slide" data-slide-index="2" hidden="" id="airbnb-evidence-03" role="group">
+    <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Supply3.jpg"/>
+  </div>
+  <div aria-label="4 of 6" aria-roledescription="slide" class="evidence-slide" data-slide-index="3" hidden="" id="airbnb-evidence-04" role="group">
+    <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Demand1.jpg"/>
+    </div>
+  <div aria-label="5 of 6" aria-roledescription="slide" class="evidence-slide" data-slide-index="4" hidden="" id="airbnb-evidence-05" role="group">
+    <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Demand2.jpg"/>
+  </div>
+  <div aria-label="6 of 6" aria-roledescription="slide" class="evidence-slide" data-slide-index="5" hidden="" id="airbnb-evidence-06" role="group">
+    <img alt="Supply Changes Rate between 2019 & 2022" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/Airbnb_Demand3.jpg"/>
+  </div>
+ </div>
+
+<div class="evidence-footer"><div aria-label="Evidence views" class="evidence-dots" role="group"><button aria-current="true" aria-label="Show evidence 1: Listings by borough, 2019 vs 2022" class="evidence-dot" data-index="0" type="button"></button><button aria-current="false" aria-label="Show evidence 2: Spatial change in supplied listings" class="evidence-dot" data-index="1" type="button"></button><button aria-current="false" aria-label="Show evidence 3: Available supply: location &amp; time" class="evidence-dot" data-index="2" type="button"></button><button aria-current="false" aria-label="Show evidence 4: Demand-indicator listings by borough" class="evidence-dot" data-index="3" type="button"></button><button aria-current="false" aria-label="Show evidence 5: Spatial change in demanded listings" class="evidence-dot" data-index="4" type="button"></button><button aria-current="false" aria-label="Show evidence 6: Spatial distribution of demanded listings" class="evidence-dot" data-index="5" type="button"></button></div>
+  <div class="evidence-footnote"><a href="https://github.com/liu-qiqi/fsds_013_final/blob/main/Reproducible_Analysis.ipynb" rel="noopener noreferrer" target="_blank">Reproducible Analysis ↗</a></div>
+</div>
+</div>
+</div></div>
+
+</section>
+
+<!-- PROJECT 4 -->
+<section class="project" id="marrakesh">
+<div class="wrap">
+<div class="project-top">
+<div class="project-index">PROJECT 04<br/>GIS &amp; URBAN REGENERATION</div>
+<div class="project-title">
+<div class="section-kicker">Politecnico di Milano · Team Project · September 2020–October 2021</div>
+<h2>Urban Regeneration<br/>in Marrakesh, Morocco</h2>
+<div class="project-subtitle">Applying socio-spatial and environmental diagnostics to inform context-sensitive urban strategies</div>
+</div>
+</div>
+<div class="project-grid">
+<div class="story">
+<h3>Project overview</h3>
+<p>Explored the relationship between the historic urban fabric, contemporary development and local socioeconomic conditions in Marrakesh. The work examined spatial and infrastructural conditions to inform regeneration strategies grounded in the local context.</p>
+<h3 style="margin-top:22px">My contribution</h3>
+<p>Independently developed ArcGIS skills to analyse population, income and education datasets, and carried out socio-spatial and environmental diagnostics. Used the findings to support the development of context-sensitive regeneration strategies and to connect analytical research with design interventions in a multidisciplinary team.</p>
+<div class="detail-grid">
+<div class="detail"><h4>Analysis focus</h4><p>Population · income · education · infrastructure · historic and modern urban context</p></div>
+<div class="detail"><h4>Tools &amp; methods</h4><p>ArcGIS · socioeconomic data analysis · spatial diagnostics · urban regeneration</p></div>
+</div>
+</div>
+<div class="evidence-carousel" data-evidence-carousel="marrakesh">
+<div class="evidence-carousel-top"><h3>Explore the project</h3><div class="evidence-arrows"><span aria-live="polite" class="evidence-count">01 / 03</span><button aria-label="Previous evidence for project marrakesh" class="evidence-arrow" data-dir="-1" type="button">‹</button><button aria-label="Next evidence for project marrakesh" class="evidence-arrow" data-dir="1" type="button">›</button></div></div>
+<div class="evidence-slide-heading">
+  <div class="slide-label">ILLUSTRATIVE FRAMEWORK</div><h4 class="evidence-slide-title">Integrated spatial-analysis layers</h4><p class="evidence-slide-description">A conceptual diagram of the socioeconomic, spatial and environmental inputs.</p>
+</div>
+<div class="evidence-stage">
+  <div aria-label="1 of 3" aria-roledescription="slide" class="evidence-slide is-current" data-slide-index="0" role="group">
+    <img alt="Demographics and Social Dynamics" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/G05_Board1.png"/>
+  </div>
+  <div aria-label="2 of 3" aria-roledescription="slide" class="evidence-slide" data-slide-index="1" hidden="" id="marrakesh-evidence-02" role="group">
+    <div class="evidence-image-wrap local-evidence">
+    <img alt="Demographics and Social Dynamics" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/G05_Demographic_Social Dynamic.png"/>
+    </div>
+  </div>
+  <div aria-label="3 of 3" aria-roledescription="slide" class="evidence-slide" data-slide-index="2" hidden="" id="marrakesh-evidence-03" role="group">
+    <img alt="Urban Regeneration" class="evidence-image local-evidence-image" decoding="async" loading="lazy" src="./projects/G05A-1.png"/>
+  </div>
+</div>
+<div class="evidence-footer"><div aria-label="Evidence views" class="evidence-dots" role="group"><button aria-current="true" aria-label="Show evidence 1: Integrated spatial-analysis layers" class="evidence-dot" data-index="0" type="button"></button><button aria-current="false" aria-label="Show evidence 2: Marrakesh ArcGIS thematic map" class="evidence-dot" data-index="1" type="button"></button><button aria-current="false" aria-label="Show evidence 3: Regeneration strategy &amp; design" class="evidence-dot" data-index="2" type="button"></button></div><div class="evidence-footnote">LINKLINKLINK</div></div>
+</div>
+</div>
+
+</section>
+
+</div>
+<section class="end" id="contact">
+<div class="wrap end-grid">
+<div>
+<div class="section-kicker" style="color:#c7d5a1">Next step</div>
+<h2>Analytical thinking and Practice for sustainable places.</h2>
+<p>I am keen to bring my spatial data, programming and visualisation experience to multidisciplinary environmental projects, while continuing to develop my GIS practice and knowledge of environmental systems.</p>
+</div>
+<div class="contact-card">
+<span>Contact</span>
+<a href="mailto:qiqiakira@hotmail.com">qiqiakira@hotmail.com</a>
+<a href="tel:+447778689892">+44 7778 689 892</a>
+<a>London, United Kingdom</a>
+</div>
+</div>
+</section>
+</main>
+<footer><div class="wrap"><span>QIQI LIU ·  PORTFOLIO</span><span></span></div></footer>
+<script>
+const ORIGINAL_VISUALISATIONS = {"map":"\u003c!doctype html>\u003chtml>\u003chead>\u003cmeta charset=\"utf-8\">\u003cbase href=\"https://digivisual-2023-group02.github.io/CASA0003/\">\u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\u003cstyle>\n*{box-sizing:border-box}html,body{padding:0;margin:0;height:100%;font:12px/1.4 Inter,system-ui,-apple-system,sans-serif;background:#fafbf7;color:#203d37}button,input{font:inherit}button{cursor:pointer}\n\u003c/style>\u003clink rel=\"stylesheet\" href=\"https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css\">\u003cstyle>\n#map{position:absolute;inset:0;min-height:300px;background:#dfe8dc}.map-overlay{position:absolute;top:10px;left:10px;z-index:4;width:min(270px,calc(100% - 20px));border-radius:12px;background:rgba(255,254,250,.96);box-shadow:0 12px 30px rgba(5,29,24,.15);padding:12px 14px}\n.control-title{margin:0 0 7px;text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#28594d;font-weight:850}.year-row{display:flex;align-items:center;gap:10px}.year-row input{min-width:0;flex:1;accent-color:#28594d}.year-row label{font-weight:800;color:#28594d}.radios{display:flex;flex-wrap:wrap;gap:6px 10px;padding-top:9px;font-size:10px}.radios label{white-space:nowrap}.radios input{accent-color:#28594d;vertical-align:middle;margin:0 3px 0 0}\n.map-legend{position:absolute;right:6px;bottom:8px;z-index:2;background:#fffefadd;border-radius:12px;padding:4px}.map-legend canvas{width:105px;height:145px}#line-chart{width:1px;height:1px;position:absolute;pointer-events:none;opacity:0;top:-100px;left:-100px}\n.mapboxgl-control-container .mapboxgl-ctrl-top-right{top:10px;right:6px}\n@media(max-width:440px){.map-overlay{width:min(230px,calc(100% - 18px));padding:10px}.mapboxgl-control-container .mapboxgl-ctrl-top-right{top:122px}}\n\u003c/style>\u003c/head>\u003cbody>\u003cdiv id=\"map\">\u003cdiv class=\"map-overlay\">\u003cdiv class=\"control-title\">Annual air pollution\u003c/div>\u003cdiv class=\"year-row\">\u003cinput id=\"slider\" type=\"range\" min=\"0\" max=\"8\" step=\"1\" value=\"0\" aria-label=\"Year from 2013 to 2021\">\u003clabel id=\"year\" for=\"slider\">2013\u003c/label>\u003c/div>\u003cdiv class=\"radios\">\u003clabel>\u003cinput type=\"radio\" name=\"layers\" value=\"PM2_5\" checked>PM2.5\u003c/label>\u003clabel>\u003cinput type=\"radio\" name=\"layers\" value=\"NO2\">NO₂\u003c/label>\u003clabel>\u003cinput type=\"radio\" name=\"layers\" value=\"NOx\">NOx\u003c/label>\u003clabel>\u003cinput type=\"radio\" name=\"layers\" value=\"O3\">O₃\u003c/label>\u003c/div>\u003c/div>\u003cdiv class=\"map-legend\">\u003ccanvas id=\"legend\" width=\"120\" height=\"150\">\u003c/canvas>\u003c/div>\u003cdiv id=\"line-chart\">\u003c/div>\u003c/div>\u003cscript src=\"https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js\">\u003c/script>\n\u003cscript src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js\">\u003c/script>\n\u003cscript src=\"https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js\">\u003c/script>\n\u003cscript src=\"https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js\">\u003c/script>\n\u003cscript src=\"./js/air_quality_map.js\">\u003c/script>\n\u003cscript src=\"./js/air_quality_map_line_chart.js\">\u003c/script>\n\u003cscript src=\"./js/air_quality_map_legend.js\">\u003c/script>\n\u003cscript>window.addEventListener('message',function(event){if(event.data==='portfolio-resize'){try{map.resize()}catch(e){}}});\ntry{map.on('idle',()=>{if(map.getSource('data_PM2_5'))parent.postMessage({type:'portfolio-visual-ready',doc:'map'},'*')});}catch(e){}\n\u003c/script>\u003c/body>\u003c/html>","ev-adoption-chart":"\u003c!doctype html>\u003chtml lang=\"en\">\u003chead>\n\u003cmeta charset=\"utf-8\">\u003cmeta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n\u003cstyle>\n*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font:12px/1.4 Inter,system-ui,-apple-system,sans-serif;background:#fafbf7;color:#203d37}\n.frame{width:100%;height:100%;padding:12px 10px 4px;display:flex;flex-direction:column;gap:3px}\n.intro{flex:0 0 auto;font-size:11px;font-weight:650;color:#546e62;padding-left:8px}\n#ge_chart3{flex:1;min-height:180px;width:100%}\n#error{display:none;color:#7e4a28;padding:24px 14px;font-size:13px}\n\u003c/style>\u003c/head>\u003cbody>\u003cdiv class=\"frame\">\u003cdiv class=\"intro\">Battery electric vehicles (BEV) and plug-in hybrid electric vehicles (PHEV) · 2011–2021\u003c/div>\u003cdiv id=\"ge_chart3\" role=\"img\" aria-label=\"BEV and PHEV annual values between 2011 and 2021\">\u003c/div>\u003cdiv id=\"error\">The interactive chart requires an internet connection to load ECharts.\u003c/div>\u003c/div>\n\u003cscript src=\"https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js\">\u003c/script>\n\u003cscript>\ntry {\n  if(typeof echarts === 'undefined') throw Error('ECharts unavailable');\n          ////////*ge_chart3*////////\n        var dom = document.getElementById('ge_chart3');\n        var myChart = echarts.init(dom, null, {\n          renderer: 'canvas',\n          useDirtyRect: false\n        });\n        var app = {};\n\n        var option;\n\n        option = {\n      tooltip: {\n        trigger: 'axis'\n      },\n      legend: {\n        data: ['BEV', 'PHEV']\n      },\n      \n      xAxis: {\n        type: 'category',\n        boundaryGap: false,\n        data: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018','2019','2020', '2021']\n      },\n      yAxis: {\n        type: 'value'\n      },\n      series: [\n        {\n          name: 'BEV',\n          type: 'line',\n          data: [1863, 606, 1233, 1153, 1402,\t2318,\t4021,\t7369,\t8985,\t12507,\t22754],\n          itemStyle: {\n                        color: '#69b3a2'\n                    },\n        },\n\n        {\n          name: 'PHEV',\n          type: 'line',\n          data: [53,\t3002,\t3716,\t3910,\t2673,\t4576,\t8486,\t10940, 7757,\t8445,\t18066],\n          itemStyle:{\n                      color: '#EE926B'\n          }\n        }\n      ]\n    };\n\n        if (option && typeof option === 'object') {\n          myChart.setOption(option);\n        }\n\n        window.addEventListener('resize', myChart.resize);\n\n      \n\n  function fitChart(){ try { myChart.resize(); } catch(e) {} }\n  window.addEventListener('message', e=>{if(e.data === 'portfolio-resize')fitChart()});\n  setTimeout(fitChart,90);\n  parent.postMessage({type:'portfolio-visual-ready',doc:'ev-adoption-chart'},'*');\n} catch(e){ document.querySelector('#error').style.display='block'; console.warn(e);parent.postMessage({type:'portfolio-visual-ready',doc:'ev-adoption-chart'},'*'); }\n\u003c/script>\u003c/body>\u003c/html>","fuel-stations-map":"\u003c!doctype html>\u003chtml lang=\"en\">\u003chead>\n\u003cmeta charset=\"utf-8\">\u003cmeta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n\u003clink rel=\"stylesheet\" href=\"https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css\"/>\n\u003cstyle>\n*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font:12px/1.4 Inter,system-ui,-apple-system,sans-serif;background:#ecf0e9;color:#203d37}\n#ge_map{position:absolute;inset:0;width:100%;height:100%;}\n.status{position:absolute;top:9px;left:9px;z-index:2;max-width:calc(100% - 70px);background:rgba(255,254,251,.97);padding:8px 10px;border-radius:8px;color:#2c594f;font-size:11px;box-shadow:0 2px 10px #203d371c}\n.legend{position:absolute;bottom:10px;left:10px;z-index:2;background:rgba(255,254,251,.97);border-radius:9px;padding:8px 10px;box-shadow:0 2px 10px #203d371c;max-width:calc(100% - 20px)}\n.legend-title{font-weight:800;font-size:11px;margin:0 0 5px}\n.legend-items{display:flex;flex-wrap:wrap;gap:5px 12px;max-width:340px}\n.legend-item{white-space:nowrap;font-size:10px}.swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}\n.mapboxgl-popup-content{font:12px/1.4 Inter,system-ui,sans-serif;max-width:250px;color:#203d37}\n.mapboxgl-popup-content b{display:block;margin-bottom:5px;font-size:13px}\n.mapboxgl-popup-content p{margin:2px 0}\n\u003c/style>\u003c/head>\u003cbody>\n\u003cdiv id=\"ge_map\" role=\"region\" aria-label=\"Interactive New York alternative-fuel-station map\">\u003c/div>\n\u003cdiv class=\"status\" id=\"status\" role=\"status\">Loading New York fuel-station data…\u003c/div>\n\u003cdiv class=\"legend\" aria-label=\"Fuel type legend\">\u003cdiv class=\"legend-title\">Alternative-fuel stations · New York\u003c/div>\u003cdiv class=\"legend-items\" id=\"legend-items\">\u003c/div>\u003c/div>\n\u003cscript src=\"https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js\">\u003c/script>\n\u003cscript>\n// Adapted from the user-provided ge_map.js (2023).\n// Same starting location, original Mapbox style and fuel categories.\n// Updated for current Mapbox expressions, Promise-based API requests and HTML-safe popups.\nconst palette={RD:'#e4a28e',HY:'#add4de',LNG:'#187d0d',BD:'#df5873',ELEC:'#51dbb4',E85:'#f5be66',CNG:'#3d8ad6',LPG:'#988dc7'};\nconst names={RD:'Renewable diesel',HY:'Hydrogen',LNG:'Liquefied natural gas',BD:'Biodiesel',ELEC:'Electric',E85:'Ethanol',CNG:'Compressed natural gas',LPG:'Propane'};\nconst legend=document.getElementById('legend-items');\nObject.keys(palette).forEach(code=>{const item=document.createElement('div');item.className='legend-item';const dot=document.createElement('span');dot.className='swatch';dot.style.background=palette[code];item.append(dot,document.createTextNode(code));item.title=names[code];legend.append(item)});\nconst status=document.getElementById('status');\nfunction setStatus(message){status.textContent=message;}\nfunction ready(){parent.postMessage({type:'portfolio-visual-ready',doc:'fuel-stations-map'},'*')}\nfunction popupRow(node,label,value){if(value===null||value===undefined||value==='')return;const p=document.createElement('p');const b=document.createElement('strong');b.textContent=label+': ';p.append(b,document.createTextNode(String(value)));node.appendChild(p);}\nif(typeof mapboxgl==='undefined'){setStatus('Mapbox could not load. Please check the internet connection.');ready();}\nelse {\n  // Public token and custom style are from the uploaded original script.\n  mapboxgl.accessToken='pk.eyJ1Ijoicm9rdW5hbmFuYSIsImEiOiJjajdvdzhkamIwM2F2MzFuMDA4cWJqN2p4In0.vHBQXdIcIMQ6mQ5KcdWrxw';\n  let map;\n  try{\n    map=new mapboxgl.Map({container:'ge_map',style:'mapbox://styles/rokunanana/cli1xdwhh006n01qygwh94nhp',center:[-73.968,40.740],zoom:10.6});\n    map.addControl(new mapboxgl.NavigationControl({showCompass:false}));\n    map.dragRotate.disable();map.touchZoomRotate.disableRotation();\n    window.addEventListener('message',e=>{if(e.data==='portfolio-resize'){setTimeout(()=>map.resize(),80)}});\n    map.on('load',async()=>{\n      ready();\n      // API host updated to its current NLR domain; request semantics unchanged.\n      const url='https://developer.nlr.gov/api/alt-fuel-stations/v1.json?api_key=DEMO_KEY&fuel_type=all&state=NY';\n      try{\n        const response=await fetch(url);\n        if(!response.ok) throw Error('HTTP '+response.status);\n        const EV=await response.json();\n        const records=Array.isArray(EV.fuel_stations)?EV.fuel_stations:[];\n        const features=records.filter(item=>Number.isFinite(+item.longitude)&&Number.isFinite(+item.latitude)).map(item=>({type:'Feature',geometry:{type:'Point',coordinates:[+item.longitude,+item.latitude]},properties:{Name:item.station_name??'',Access:item.access_code??'',Fuel:item.fuel_type_code??'',Address:item.street_address??'',ZipCode:item.zip??'',EVnetwork:item.ev_network??'',EVprice:item.ev_pricing??''}}));\n        if(!features.length)throw Error('No station coordinates returned');\n        map.addSource('points',{type:'geojson',data:{type:'FeatureCollection',features}});\n        map.addLayer({id:'Stations',type:'circle',source:'points',paint:{'circle-radius':['interpolate',['linear'],['zoom'],8,2,12,5,15,8], 'circle-stroke-width':0.45,'circle-stroke-color':'#ffffff','circle-opacity':0.80,'circle-color':['match',['get','Fuel'],'RD',palette.RD,'HY',palette.HY,'LNG',palette.LNG,'BD',palette.BD,'ELEC',palette.ELEC,'E85',palette.E85,'CNG',palette.CNG,'LPG',palette.LPG,'#8b9b94']}});\n        setStatus(features.length.toLocaleString()+' alternative-fuel stations · hover for details');\n        const popup=new mapboxgl.Popup({closeButton:false,closeOnClick:false});\n        map.on('mouseenter','Stations',e=>{\n          map.getCanvas().style.cursor='pointer';\n          const feat=e.features&&e.features[0];if(!feat)return;\n          const prop=feat.properties||{};\n          const content=document.createElement('div');const title=document.createElement('b');title.textContent=prop.Name||'Fuel station';content.appendChild(title);\n          popupRow(content,'Access',prop.Access);popupRow(content,'Fuel',prop.Fuel);popupRow(content,'Street',prop.Address);popupRow(content,'Zip',prop.ZipCode);popupRow(content,'EV Network',prop.EVnetwork);popupRow(content,'EV price',prop.EVprice);\n          popup.setLngLat(feat.geometry.coordinates.slice()).setDOMContent(content).addTo(map);\n        });\n        map.on('mouseleave','Stations',()=>{map.getCanvas().style.cursor='';popup.remove()});\n      }catch(error){setStatus('Live station feed unavailable ('+error.message+'). The map base layer is still interactive.');}\n    });\n    map.on('error',e=>{console.warn('Mapbox resource error',e&&e.error?e.error.message:e)});\n  }catch(e){setStatus('Unable to initialise map: '+e.message);ready();}\n}\n\u003c/script>\u003c/body>\u003c/html>"};
+const PORTFOLIO_SLIDES = {"air-quality":[{"title":"Interactive district map","description":"Switch pollutants and years (2013–2021) to explore the original Mapbox choropleth in this same panel.","tag":"LIVE · INTERACTIVE MAP"},
+{"title":"Electric & plug-in hybrid vehicle trends","description":"Original BEV and PHEV ECharts series (2011–2021)","tag":"LIVE · INTERACTIVE CHART"},
+{"title":"New York alternative-fuel stations","description":"Interactive Mapbox point map of alternative-fuel stations, coloured by fuel type.","tag":"LIVE · INTERACTIVE MAP"}],
+
+"high-streets":[{"title":"Spatial analysis workflow","description":"A process diagram summarising your data integration, analysis and classification work.","tag":"ILLUSTRATIVE FRAMEWORK"},
+{"title":"London High-Street Boundaries (2021)","description":"London high-street boundaries in LSOAs(Lower Super Output Areas) level.","tag":"ANALYSIS VISUALISATION"},
+{"title":"London Socio-Economic Changes (2011 & 2021)","description":"Percentage change in London's demographics, economy, and house prices (LSOAs level).","tag":"ANALYSIS VISUALISATION"},
+{"title":"Chosen Study Area (Waltham Forest Borough) Changes (2011 & 2021)","description":"Percentage change in the area's demographics, economy, and house prices (LSOAs level).","tag":"ANALYSIS VISUALISATION"},
+{"title":"High Streets and Buffer Areas in Waltham Forest","description":"Buffer areas mean the influences of high streets around 100 meters, filtering LSOAs within this range and averaging their variables (economy, population) to represent the variables of the respective high street.","tag":"ANALYSIS VISUALISATION"},
+{"title":"Changes in Retail Duration (2011)","description":"In 2011, most WF high streets experienced or were undergoing significant urban renewal, leading to the influx of numerous new retail establishments onto high streets.","tag":"ANALYSIS VISUALISATION"},
+{"title":"Changes in Retail Duration (2021)","description":"A decade later, small high streets are gradually stabilizing while ongoing urban renewal impacts and retail updates in the central high streets.","tag":"ANALYSIS VISUALISATION"}],
+
+"airbnb":[{"title":"Supply Listing Chart 2019 vs 2022","description":"An overview of availability of listings. Among all areas, listings in Tower Hamlets has declined severely","tag":"POLICY BRIEFING REPORT"},
+{"title":"Supply Changes Rates by Borough 2019 vs 2022","description":"Only 4 boroughs saw a decrease in the number of listings after the epidemic (lighter colour areas with rates under 0), and the remaining 29 boroughs all showed an upward trend. Bexley (the darkest area) is the largest increase among all areas.","tag":"POLICY BRIEFING REPORT"},
+{"title":"Supply Avaiability 2019 vs 2022","description":"Can these listings be offered on the real market? To understand the real market situation, we decided to use the availability data for the next 365 days to see the real and effective listings. In 2019, most listings' availabilities for booking are under 150 days while in 2022, most are extended to 250 days.","tag":"POLICY BRIEFING REPORT"},
+{"title":"Demand Listing Chart 2019 vs 2022","description":"An overview of market demands listings.","tag":"POLICY BRIEFING REPORT"},
+{"title":"Demand Changes Rates by Borough 2019 vs 2022","description":"It seems like that demand listings follow the supply lisitings with same patterns, however, the indicator of rates is quite different. Decreasing rates are much bigger than increasing ones. Most boroughs in central London are decreasing in demand.","tag":"POLICY BRIEFING REPORT"},{"title":"Spatial change in demanded listings","description":"Original borough-level map of changes in demand-indicator listings.","tag":"POLICY BRIEFING REPORT"},
+{"title":"Demand Listings by Borough 2019 vs 2022","description":"The demand listings of London are mainly concentrated in the central area of London, and the spatial distribution shows a trend of shifting to outer London.","tag":"POLICY BRIEFING REPORT"}],
+
+"marrakesh":[{"title":"Demographics and Social Dynamics Analysis","description":"Reserved for an original map from the Marrakesh regeneration project.","tag":"VISUALISATION BORAD"},
+{"title":"City Expansion and Population Evolution (Analysis on ArcGIS map)","description":"From the perspective of urban expansion, Marrakech did not expand much in city extension, most suburban but due to its services may lands are converted into not as good as Menara and urban areas. After 2002, it entered a stage of rapid development, and the built-up area of the city increased significantly.","tag":"REPORT AND VISUALISATION"},
+{"title":"Urban Regeneration","description":"Urban renewal between historic urban fabric and contemporary development","tag":"VISUALISATION ANALYSIS"}]
+
+};
+
+(function(){
+ window.addEventListener('message',e=>{
+   if(!e.data || e.data.type!=='portfolio-visual-ready')return;
+   document.querySelectorAll('iframe[data-live-doc]').forEach(frame=>{
+     if(e.source===frame.contentWindow && frame.dataset.liveDoc===e.data.doc){
+       const fallback=frame.closest('.evidence-slide').querySelector('.live-fallback');
+       if(fallback)fallback.remove();
+     }
+   });
+ });
+ document.querySelectorAll('[data-evidence-carousel]').forEach(root=>{
+   const id=root.dataset.evidenceCarousel;
+   const data=PORTFOLIO_SLIDES[id];
+   const all=Array.from(root.querySelectorAll('.evidence-slide'));
+   const dots=Array.from(root.querySelectorAll('.evidence-dot'));
+   let current=0;
+   function show(next){
+     current=(next+all.length)%all.length;
+     all.forEach((slide,i)=>{
+       const active=i===current;
+       slide.hidden=!active;
+       slide.classList.toggle('is-current',active);
+       if(active){
+         const frame=slide.querySelector('iframe[data-live-doc]');
+         if(frame){
+           if(!frame.srcdoc){frame.srcdoc=ORIGINAL_VISUALISATIONS[frame.dataset.liveDoc];}
+           else {setTimeout(()=>{try{frame.contentWindow.postMessage('portfolio-resize','*')}catch(e){}},60);}
+         }
+       }
+     });
+     root.querySelector('.evidence-count').textContent=String(current+1).padStart(2,'0')+' / '+String(all.length).padStart(2,'0');
+     root.querySelector('.evidence-slide-title').textContent=data[current].title;
+     root.querySelector('.evidence-slide-description').textContent=data[current].description;
+     root.querySelector('.slide-label').textContent=data[current].tag;
+     dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===current)));
+   }
+   root.querySelectorAll('[data-dir]').forEach(button=>button.addEventListener('click',()=>show(current+Number(button.dataset.dir))));
+   dots.forEach((dot,i)=>dot.addEventListener('click',()=>show(i)));
+   root.addEventListener('keydown',e=>{
+     if(e.target.closest('button') && (e.key==='ArrowLeft'||e.key==='ArrowRight')){
+       e.preventDefault();show(current+(e.key==='ArrowRight'?1:-1));
+     }
+   });
+   show(0);
+ });
+})();
+</script></body>
+</html>
